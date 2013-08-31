@@ -114,6 +114,46 @@ Prefab:
   m_RootGameObject: {fileID: 1562278899}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1001 &797174291
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+  m_RootGameObject: {fileID: 982988179}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1001 &803039970
 Prefab:
   m_ObjectHideFlags: 0
@@ -181,7 +221,8 @@ Prefab:
       propertyPath: m_Name
       value: House Mesh
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9500000, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
   m_RootGameObject: {fileID: 1214421795}
   m_IsPrefabParent: 0
@@ -253,6 +294,47 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!1 &982988179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+  m_PrefabInternal: {fileID: 797174291}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 982988180}
+  - 114: {fileID: 982988181}
+  m_Layer: 0
+  m_Name: NetworkingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &982988180
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: c1b847f49698242f3a650a74ba37a53c, type: 2}
+  m_PrefabInternal: {fileID: 797174291}
+  m_GameObject: {fileID: 982988179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &982988181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: c1b847f49698242f3a650a74ba37a53c,
+    type: 2}
+  m_PrefabInternal: {fileID: 797174291}
+  m_GameObject: {fileID: 982988179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17ff557bfca5408aa52e6e666cefbde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverIP: 127.0.0.1
+  serverPort: 7100
 --- !u!1 &1214421795
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +343,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1214421797}
-  - 95: {fileID: 1214421796}
   - 64: {fileID: 1214421798}
   m_Layer: 0
   m_Name: House with Interior
@@ -270,19 +351,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &1214421796
-Animator:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9500000, guid: 1df2d76bed37c456183bda1b7e865ce6,
-    type: 3}
-  m_PrefabInternal: {fileID: 803039970}
-  m_GameObject: {fileID: 1214421795}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
-  m_ApplyRootMotion: 1
-  m_AnimatePhysics: 0
 --- !u!4 &1214421797
 Transform:
   m_ObjectHideFlags: 0
