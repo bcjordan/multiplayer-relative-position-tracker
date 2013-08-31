@@ -173,6 +173,14 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
+      propertyPath: m_Name
+      value: House with Interior
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
+      propertyPath: m_Name
+      value: House Mesh
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1df2d76bed37c456183bda1b7e865ce6, type: 3}
   m_RootGameObject: {fileID: 1214421795}
@@ -181,15 +189,15 @@ Prefab:
 --- !u!1 &805162229
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 100000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+  m_PrefabInternal: {fileID: 2106509440}
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 805162232}
   - 114: {fileID: 805162231}
   - 154: {fileID: 805162230}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Outdoor Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -198,8 +206,9 @@ GameObject:
 --- !u!154 &805162230
 TerrainCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 15400000, guid: cd403c55ec550477e91fadbe1a5ae52c,
+    type: 2}
+  m_PrefabInternal: {fileID: 2106509440}
   m_GameObject: {fileID: 805162229}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -209,8 +218,9 @@ TerrainCollider:
 --- !u!114 &805162231
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 11400000, guid: cd403c55ec550477e91fadbe1a5ae52c,
+    type: 2}
+  m_PrefabInternal: {fileID: 2106509440}
   m_GameObject: {fileID: 805162229}
   m_Enabled: 1
   m_EditorHideFlags: 1
@@ -235,8 +245,8 @@ MonoBehaviour:
 --- !u!4 &805162232
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabParentObject: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+  m_PrefabInternal: {fileID: 2106509440}
   m_GameObject: {fileID: 805162229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -377.485413, y: 0, z: -682.223267}
@@ -254,7 +264,7 @@ GameObject:
   - 95: {fileID: 1214421796}
   - 64: {fileID: 1214421798}
   m_Layer: 0
-  m_Name: house
+  m_Name: House with Interior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -309,7 +319,7 @@ GameObject:
   - 33: {fileID: 1284619057}
   - 23: {fileID: 1284619056}
   m_Layer: 0
-  m_Name: mesh1
+  m_Name: House Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -667,3 +677,43 @@ CharacterController:
   m_SkinWidth: .0500000007
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &2106509440
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -377.485413
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -682.223267
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: cd403c55ec550477e91fadbe1a5ae52c, type: 2}
+  m_RootGameObject: {fileID: 805162229}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
