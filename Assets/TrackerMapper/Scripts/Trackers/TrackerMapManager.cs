@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class TrackerMapManager : MonoBehaviour
 {
-    IDictionary<Tracker, TrackerGraphNode> knownTrackerGraphNodes = new Dictionary<Tracker, TrackerGraphNode>();
+    private IDictionary<Tracker, TrackerGraphNode> knownTrackerGraphNodes = new Dictionary<Tracker, TrackerGraphNode>();
 
     public Color debugFirstNodeColor;
     public float debugFirstNodeRadius;
@@ -39,11 +39,13 @@ public class TrackerMapManager : MonoBehaviour
         Gizmos.DrawSphere(firstTracker.transform.position, debugFirstNodeRadius);
 
         Gizmos.color = debugAdjacentNodesColor;
-        IList<TrackerGraphNode> seenNodes = new List<TrackerGraphNode>{firstNode};
-        PositionRotationTransform positionRotationTransform = new PositionRotationTransform();
-        positionRotationTransform.position = firstTracker.transform.position;
-        positionRotationTransform.rotation = firstTracker.transform.rotation.eulerAngles;
-        firstNode.DrawGraphTail(positionRotationTransform, debugAdjacentNodesRadius, seenNodes);
+
+        PositionRotationTransform startingAbsoluteTransform = new PositionRotationTransform(firstTracker.transform);
+
+        foreach (PositionRotationTransform currentTransform in firstNode.EachTransformInGraph(startingAbsoluteTransform))
+        {
+            Gizmos.DrawSphere(currentTransform.position, debugAdjacentNodesRadius);
+        }
     }
 
     void OnGUI()
@@ -65,8 +67,8 @@ public class TrackerMapManager : MonoBehaviour
 
 	public void MapAdjacentTrackerPair(Tracker trackerA, Tracker trackerB)
     {
-        EnsureTracked(trackerA);
-        EnsureTracked(trackerB);
+        StoreKnownTrackerNode(trackerA);
+        StoreKnownTrackerNode(trackerB);
 
         TrackerGraphNode trackerANode = knownTrackerGraphNodes[trackerA];
         TrackerGraphNode trackerBNode = knownTrackerGraphNodes[trackerB];
@@ -90,7 +92,7 @@ public class TrackerMapManager : MonoBehaviour
         return relativePositionRotationTransform;
     }
 
-    void EnsureTracked(Tracker tracker)
+    void StoreKnownTrackerNode(Tracker tracker)
     {
         if (!knownTrackerGraphNodes.ContainsKey(tracker))
         {

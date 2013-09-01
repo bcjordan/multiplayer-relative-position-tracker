@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 class TrackerGraphNode
 {
-    IList<TrackerGraphNode> nextChildren;
-
-    IDictionary<TrackerGraphNode, PositionRotationTransform> nextGraphNodes = new Dictionary<TrackerGraphNode, PositionRotationTransform>();
-
+    private IDictionary<TrackerGraphNode, PositionRotationTransform> nextGraphNodes = new Dictionary<TrackerGraphNode, PositionRotationTransform>();
+    
     public bool ContainsChild(TrackerGraphNode graphNode)
     {
         return nextGraphNodes.ContainsKey(graphNode);
@@ -18,18 +16,28 @@ class TrackerGraphNode
         nextGraphNodes[childGraphNode] = positionRotationTransform;
     }
 
-    public void DrawGraphTail(PositionRotationTransform currentPositionRotation, float radius, IList<TrackerGraphNode> seenNodes)
+    public IEnumerable<PositionRotationTransform> EachTransformInGraph(PositionRotationTransform startingPositionRotation)
     {
+        return EachTransformInGraphExcluding(startingPositionRotation, new List<TrackerGraphNode>());
+    }
+
+    public IEnumerable<PositionRotationTransform> EachTransformInGraphExcluding(PositionRotationTransform currentPositionRotation, IList<TrackerGraphNode> excludingNodes)
+    {
+        if (excludingNodes.Contains(this))
+        {
+            yield break;
+        }
+
+        excludingNodes.Add(this);
+        yield return currentPositionRotation;
+
         foreach (KeyValuePair<TrackerGraphNode, PositionRotationTransform> pair in nextGraphNodes)
         {
-            if (!seenNodes.Contains(pair.Key))
+            PositionRotationTransform nextTransform = currentPositionRotation.AddTo(pair.Value);
+
+            foreach (PositionRotationTransform positionRotationTransform in pair.Key.EachTransformInGraphExcluding(nextTransform, excludingNodes))
             {
-                seenNodes.Add(pair.Key);
-
-                PositionRotationTransform nextTransform = currentPositionRotation.AddTo(pair.Value);
-                Gizmos.DrawSphere(nextTransform.position, radius);
-
-                pair.Key.DrawGraphTail(nextTransform, radius, seenNodes);
+                yield return positionRotationTransform;
             }
         }
     }
