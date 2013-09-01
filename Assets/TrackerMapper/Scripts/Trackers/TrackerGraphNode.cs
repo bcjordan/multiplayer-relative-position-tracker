@@ -16,12 +16,12 @@ class TrackerGraphNode
         nextGraphNodes[childGraphNode] = positionRotationTransform;
     }
 
-    public IEnumerable<PositionRotationTransform> EachTransformInGraph(PositionRotationTransform startingPositionRotation)
+    public IEnumerable<PositionRotationTransform> EachAbsoluteTransformInGraph(PositionRotationTransform startingPositionRotation)
     {
-        return EachTransformInGraphExcluding(startingPositionRotation, new List<TrackerGraphNode>());
+        return EachAbsoluteTransformInGraphExcluding(startingPositionRotation, new List<TrackerGraphNode>());
     }
 
-    public IEnumerable<PositionRotationTransform> EachTransformInGraphExcluding(PositionRotationTransform currentPositionRotation, IList<TrackerGraphNode> excludingNodes)
+    public IEnumerable<PositionRotationTransform> EachAbsoluteTransformInGraphExcluding(PositionRotationTransform currentPositionRotation, IList<TrackerGraphNode> excludingNodes)
     {
         if (excludingNodes.Contains(this))
         {
@@ -35,7 +35,7 @@ class TrackerGraphNode
         {
             PositionRotationTransform nextTransform = currentPositionRotation.AddTo(pair.Value);
 
-            foreach (PositionRotationTransform positionRotationTransform in pair.Key.EachTransformInGraphExcluding(nextTransform, excludingNodes))
+            foreach (PositionRotationTransform positionRotationTransform in pair.Key.EachAbsoluteTransformInGraphExcluding(nextTransform, excludingNodes))
             {
                 yield return positionRotationTransform;
             }

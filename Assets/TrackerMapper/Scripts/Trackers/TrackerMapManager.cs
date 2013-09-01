@@ -42,7 +42,7 @@ public class TrackerMapManager : MonoBehaviour
 
         PositionRotationTransform startingAbsoluteTransform = new PositionRotationTransform(firstTracker.transform);
 
-        foreach (PositionRotationTransform currentTransform in firstNode.EachTransformInGraph(startingAbsoluteTransform))
+        foreach (PositionRotationTransform currentTransform in firstNode.EachAbsoluteTransformInGraph(startingAbsoluteTransform))
         {
             Gizmos.DrawSphere(currentTransform.position, debugAdjacentNodesRadius);
         }
