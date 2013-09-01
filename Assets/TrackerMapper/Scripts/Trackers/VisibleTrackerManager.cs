@@ -5,13 +5,36 @@ using System.Collections.Generic;
 public class VisibleTrackerManager : Manager
 {
     public float debugGizmoRadius;
+    public Color debugGizmoColor;
 
     private IList<Tracker> _trackers = new List<Tracker>();
+
+    public delegate void SeeingMultipleTrackersEventHandler(IList<Tracker> trackers);
+    public event SeeingMultipleTrackersEventHandler SeeMultipleTrackers;
 
     void OnGUI()
     {
         GUI.Label(new Rect(140, 60, 350, 40), _trackers.Count.ToString() +
                   " visible tracker" + (_trackers.Count == 1 ? "" : "s"));
+    }
+    
+    void OnDrawGizmos()
+    {
+        foreach (Tracker tracker in _trackers)
+        {
+            Gizmos.DrawSphere(tracker.transform.position, debugGizmoRadius);
+        }
+    }
+
+    void Update()
+    {
+        if (_trackers.Count >= 2)
+        {
+            if (SeeMultipleTrackers != null)
+            {
+                SeeMultipleTrackers(_trackers);
+            }
+        }
     }
 
     public void SetVisibility(Tracker tracker, bool visible)
@@ -39,11 +62,18 @@ public class VisibleTrackerManager : Manager
         _trackers.Remove(tracker);
     }
 
-    void OnDrawGizmos()
+    public bool HasVisibleTrackers()
     {
-        foreach (Tracker tracker in _trackers)
+        return _trackers.Count > 0;
+    }
+
+    public Tracker TryGetFirstVisibleTracker()
+    {
+        if (_trackers.Count > 0)
         {
-            Gizmos.DrawSphere(tracker.transform.position, debugGizmoRadius);
+            return _trackers[0];
         }
+
+        return null;
     }
 }

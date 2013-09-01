@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraManager : Manager
+public class VisionManager : Manager
 {
     public GameObject cameraToUse;
 

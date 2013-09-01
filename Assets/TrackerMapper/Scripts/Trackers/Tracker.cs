@@ -5,7 +5,7 @@ public class Tracker : MonoBehaviour
 {
     void Update()
     {
-        bool visibleFromCamera = Managers.GetManager<CameraManager>().IsVisible(gameObject);
+        bool visibleFromCamera = Managers.GetManager<VisionManager>().IsVisible(gameObject);
         Managers.GetManager<VisibleTrackerManager>().SetVisibility(this, visibleFromCamera);
     }
 }
