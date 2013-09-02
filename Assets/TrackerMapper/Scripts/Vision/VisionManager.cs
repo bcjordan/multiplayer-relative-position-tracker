@@ -9,6 +9,7 @@ public class VisionManager : Manager
     {
         if (cameraToUse == null)
         {
+            Debug.Log("Null camera");
             return false;
         }
 

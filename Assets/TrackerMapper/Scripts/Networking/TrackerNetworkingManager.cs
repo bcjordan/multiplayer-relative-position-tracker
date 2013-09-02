@@ -14,6 +14,17 @@ public class TrackerNetworkingManager : Manager
         networkView.RPC("HelloRPC", uLink.RPCMode.Others, "Hello uLink. Timestamp = " + System.DateTime.Now.Ticks);
     }
 
+    public void PlaceRelativeSpaceObject(string trackerID, PositionRotationTransform positionRotationTransform, int objectID)
+    {
+        networkView.RPC("AddRelativeSpaceObject", uLink.RPCMode.All, trackerID, positionRotationTransform, objectID);
+    }
+
+    [RPC]
+    void AddRelativeSpaceObject(string trackerID, PositionRotationTransform positionRotationTransform, int objectID)
+    {
+        Managers.GetManager<RelativeSpacePlacedObjectManager>().PlaceObjectAtGraphNode(trackerID, positionRotationTransform, objectID);
+    }
+
     [RPC]
     void HelloRPC(string hello)
     {

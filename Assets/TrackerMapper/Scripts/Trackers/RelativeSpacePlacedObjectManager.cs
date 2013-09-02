@@ -4,49 +4,50 @@ using System.Collections.Generic;
 
 public class RelativeSpacePlacedObjectManager : Manager
 {
-    private IDictionary<TrackerGraphNode, IList<PlacedObject>> placedObjectsByNode = new Dictionary<TrackerGraphNode, IList<PlacedObject>>();
+    public List<GameObject> prefabsByIndex;
 
-    void Update()
+    private IDictionary<string, IList<PlacedObject>> placedObjectsByNode = new Dictionary<string, IList<PlacedObject>>();
+
+    void Start()
     {
-        AttemptToDrawPlacedObjects();
+        Managers.GetManager<PositionedTrackerUpdateManager>().TrackerPositionUpdate += OnTrackerPosition;
     }
 
-    void AttemptToDrawPlacedObjects()
+    void Destroy()
     {
-        Tracker firstTracker = Managers.GetManager<VisibleTrackerManager>().TryGetFirstVisibleTracker();
-        if (firstTracker == null)
-        {
-            return;
-        }
+        Managers.GetManager<PositionedTrackerUpdateManager>().TrackerPositionUpdate -= OnTrackerPosition;
+    }
 
-        PositionRotationTransform startingAbsoluteTransform = new PositionRotationTransform(firstTracker.transform);
-
-        foreach(KeyValuePair<PositionRotationTransform, TrackerGraphNode> pair in Managers.GetManager<TrackerMapManager>().GetNodeForTracker(firstTracker).EachAbsoluteTrackerNode(startingAbsoluteTransform))
+    void OnTrackerPosition(string trackerID, PositionRotationTransform trackerAbsolutePositionRotation)
+    {
+        foreach (PlacedObject placedObject in GetObjectsForGraphNode(trackerID))
         {
-            foreach (PlacedObject placedObject in GetObjectsForGraphNode(pair.Value))
+            if (placedObject.instanceObject == null)
             {
-                if (placedObject.instanceObject == null)
-                {
-                    PositionRotationTransform absolutePositionRotationTransform = pair.Key.AddTo(placedObject.positionRotationTransform);
-                    placedObject.instanceObject = (GameObject)Instantiate(placedObject.prefabObject, absolutePositionRotationTransform.position, Quaternion.Euler(absolutePositionRotationTransform.rotation));
-                }
+                PositionRotationTransform absolutePositionRotationTransform = trackerAbsolutePositionRotation.AddTo(placedObject.positionRotationTransform);
+                placedObject.instanceObject = (GameObject)Instantiate(placedObject.prefabObject, absolutePositionRotationTransform.position, Quaternion.Euler(absolutePositionRotationTransform.rotation));
             }
         }
     }
 
-    public void PlaceObjectAtGraphNode(TrackerGraphNode trackerGraphNode, PositionRotationTransform positionRotationTransform, GameObject prefabObject)
+    public void PlaceObjectAtGraphNode(string trackerID, PositionRotationTransform positionRotationTransform, int prefabID)
     {
-        GetObjectsForGraphNode(trackerGraphNode).Add(new PlacedObject(positionRotationTransform, prefabObject));
+        GetObjectsForGraphNode(trackerID).Add(new PlacedObject(positionRotationTransform, prefabsByIndex[prefabID]));
     }
 
-    IList<PlacedObject> GetObjectsForGraphNode(TrackerGraphNode trackerGraphNode)
+    public void PlaceObjectAtGraphNode(TrackerGraphNode trackerGraphNode, PositionRotationTransform positionRotationTransform, GameObject prefabObject)
     {
-        if (!placedObjectsByNode.ContainsKey(trackerGraphNode))
+        GetObjectsForGraphNode(trackerGraphNode.uniqueTrackerID).Add(new PlacedObject(positionRotationTransform, prefabObject));
+    }
+
+    IList<PlacedObject> GetObjectsForGraphNode(string uniqueTrackerID)
+    {
+        if (!placedObjectsByNode.ContainsKey(uniqueTrackerID))
         {
-            placedObjectsByNode[trackerGraphNode] = new List<PlacedObject>();
+            placedObjectsByNode[uniqueTrackerID] = new List<PlacedObject>();
         }
 
-        return placedObjectsByNode[trackerGraphNode];
+        return placedObjectsByNode[uniqueTrackerID];
     }
 
     void OnGUI()

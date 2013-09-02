@@ -4,8 +4,15 @@ using System.Collections.Generic;
 
 public class TrackerGraphNode
 {
+    public string uniqueTrackerID;
+
     private IDictionary<TrackerGraphNode, PositionRotationTransform> nextGraphNodes = new Dictionary<TrackerGraphNode, PositionRotationTransform>();
-    
+
+    public TrackerGraphNode(string newTrackerID)
+    {
+        uniqueTrackerID = newTrackerID;
+    }
+
     public bool ContainsNeighbor(TrackerGraphNode graphNode)
     {
         return nextGraphNodes.ContainsKey(graphNode);

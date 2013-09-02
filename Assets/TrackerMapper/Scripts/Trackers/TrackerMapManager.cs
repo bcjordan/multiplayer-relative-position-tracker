@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class TrackerMapManager : Manager
 {
-    private IDictionary<Tracker, TrackerGraphNode> knownTrackerGraphNodes = new Dictionary<Tracker, TrackerGraphNode>();
+    private IDictionary<string, TrackerGraphNode> trackerGraphNodesByID = new Dictionary<string, TrackerGraphNode>();
 
     public Color debugFirstNodeColor;
     public float debugFirstNodeRadius;
@@ -15,6 +15,11 @@ public class TrackerMapManager : Manager
     void Start()
     {
         Managers.GetManager<VisibleTrackerManager>().SeeMultipleTrackers += OnMultipleTrackersSeen;
+    }
+
+    void Destroy()
+    {
+        Managers.GetManager<VisibleTrackerManager>().SeeMultipleTrackers -= OnMultipleTrackersSeen;
     }
 
     void OnDrawGizmos()
@@ -28,12 +33,12 @@ public class TrackerMapManager : Manager
 
         Tracker firstTracker = visibleTrackerManager.TryGetFirstVisibleTracker();
 
-        if (!knownTrackerGraphNodes.ContainsKey(firstTracker))
+        if (!trackerGraphNodesByID.ContainsKey(firstTracker.uniqueID))
         {
             return;
         }
 
-        TrackerGraphNode firstNode = knownTrackerGraphNodes[firstTracker];
+        TrackerGraphNode firstNode = GetNodeForID(firstTracker.uniqueID);
 
         Gizmos.color = debugFirstNodeColor;
         Gizmos.DrawSphere(firstTracker.transform.position, debugFirstNodeRadius);
@@ -50,8 +55,8 @@ public class TrackerMapManager : Manager
 
     void OnGUI()
     {
-        GUI.Label(new Rect(140, 0, 350, 40), knownTrackerGraphNodes.Count.ToString() +
-                  " mapped tracker" + (knownTrackerGraphNodes.Count == 1 ? "" : "s"));
+        GUI.Label(new Rect(140, 0, 350, 40), trackerGraphNodesByID.Count.ToString() +
+                  " mapped tracker" + (trackerGraphNodesByID.Count == 1 ? "" : "s"));
     }
 
     void OnMultipleTrackersSeen(IList<Tracker> trackers)
@@ -67,11 +72,11 @@ public class TrackerMapManager : Manager
 
 	public void MapAdjacentTrackerPair(Tracker trackerA, Tracker trackerB)
     {
-        StoreKnownTrackerNode(trackerA);
-        StoreKnownTrackerNode(trackerB);
+        StoreKnownTrackerNode(trackerA.uniqueID);
+        StoreKnownTrackerNode(trackerB.uniqueID);
 
-        TrackerGraphNode trackerANode = knownTrackerGraphNodes[trackerA];
-        TrackerGraphNode trackerBNode = knownTrackerGraphNodes[trackerB];
+        TrackerGraphNode trackerANode = trackerGraphNodesByID[trackerA.uniqueID];
+        TrackerGraphNode trackerBNode = trackerGraphNodesByID[trackerB.uniqueID];
 
         if (!trackerANode.ContainsNeighbor(trackerBNode))
         {
@@ -92,17 +97,23 @@ public class TrackerMapManager : Manager
         return relativePositionRotationTransform;
     }
 
-    void StoreKnownTrackerNode(Tracker tracker)
+    void StoreKnownTrackerNode(string trackerID)
     {
-        if (!knownTrackerGraphNodes.ContainsKey(tracker))
+        if (!trackerGraphNodesByID.ContainsKey(trackerID))
         {
-            knownTrackerGraphNodes[tracker] = new TrackerGraphNode();
+            trackerGraphNodesByID[trackerID] = new TrackerGraphNode(trackerID);
         }
     }
 
     public TrackerGraphNode GetNodeForTracker(Tracker tracker)
     {
-        StoreKnownTrackerNode(tracker);
-        return knownTrackerGraphNodes[tracker];
+        StoreKnownTrackerNode(tracker.uniqueID);
+        return trackerGraphNodesByID[tracker.uniqueID];
+    }
+
+    public TrackerGraphNode GetNodeForID(string trackerID)
+    {
+        StoreKnownTrackerNode(trackerID);
+        return trackerGraphNodesByID[trackerID];
     }
 }
