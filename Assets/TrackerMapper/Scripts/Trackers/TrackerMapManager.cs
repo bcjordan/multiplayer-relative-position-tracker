@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TrackerMapManager : MonoBehaviour
+public class TrackerMapManager : Manager
 {
     private IDictionary<Tracker, TrackerGraphNode> knownTrackerGraphNodes = new Dictionary<Tracker, TrackerGraphNode>();
 
@@ -16,7 +16,7 @@ public class TrackerMapManager : MonoBehaviour
     {
         Managers.GetManager<VisibleTrackerManager>().SeeMultipleTrackers += OnMultipleTrackersSeen;
     }
-    
+
     void OnDrawGizmos()
     {
         VisibleTrackerManager visibleTrackerManager = Managers.GetManager<VisibleTrackerManager>();
@@ -42,15 +42,15 @@ public class TrackerMapManager : MonoBehaviour
 
         PositionRotationTransform startingAbsoluteTransform = new PositionRotationTransform(firstTracker.transform);
 
-        foreach (PositionRotationTransform currentTransform in firstNode.EachAbsoluteTransformInGraph(startingAbsoluteTransform))
+        foreach (KeyValuePair<PositionRotationTransform, TrackerGraphNode> pair in firstNode.EachAbsoluteTrackerNode(startingAbsoluteTransform))
         {
-            Gizmos.DrawSphere(currentTransform.position, debugAdjacentNodesRadius);
+            Gizmos.DrawSphere(pair.Key.position, debugAdjacentNodesRadius);
         }
     }
 
     void OnGUI()
     {
-        GUI.Label(new Rect(140, 50, 350, 40), knownTrackerGraphNodes.Count.ToString() +
+        GUI.Label(new Rect(140, 0, 350, 40), knownTrackerGraphNodes.Count.ToString() +
                   " mapped tracker" + (knownTrackerGraphNodes.Count == 1 ? "" : "s"));
     }
 
@@ -73,14 +73,14 @@ public class TrackerMapManager : MonoBehaviour
         TrackerGraphNode trackerANode = knownTrackerGraphNodes[trackerA];
         TrackerGraphNode trackerBNode = knownTrackerGraphNodes[trackerB];
 
-        if (!trackerANode.ContainsChild(trackerBNode))
+        if (!trackerANode.ContainsNeighbor(trackerBNode))
         {
-            trackerANode.AddChild(trackerBNode, RelativePositionRotationTransform(trackerA, trackerB));
+            trackerANode.AddNeighbor(trackerBNode, RelativePositionRotationTransform(trackerA, trackerB));
         }
 
-        if (!trackerBNode.ContainsChild(trackerANode))
+        if (!trackerBNode.ContainsNeighbor(trackerANode))
         {
-            trackerBNode.AddChild(trackerANode, RelativePositionRotationTransform(trackerB, trackerA));
+            trackerBNode.AddNeighbor(trackerANode, RelativePositionRotationTransform(trackerB, trackerA));
         }
     }
 
@@ -98,5 +98,11 @@ public class TrackerMapManager : MonoBehaviour
         {
             knownTrackerGraphNodes[tracker] = new TrackerGraphNode();
         }
+    }
+
+    public TrackerGraphNode GetNodeForTracker(Tracker tracker)
+    {
+        StoreKnownTrackerNode(tracker);
+        return knownTrackerGraphNodes[tracker];
     }
 }

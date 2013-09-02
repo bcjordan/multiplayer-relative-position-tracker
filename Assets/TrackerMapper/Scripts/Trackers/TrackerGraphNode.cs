@@ -2,26 +2,26 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-class TrackerGraphNode
+public class TrackerGraphNode
 {
     private IDictionary<TrackerGraphNode, PositionRotationTransform> nextGraphNodes = new Dictionary<TrackerGraphNode, PositionRotationTransform>();
     
-    public bool ContainsChild(TrackerGraphNode graphNode)
+    public bool ContainsNeighbor(TrackerGraphNode graphNode)
     {
         return nextGraphNodes.ContainsKey(graphNode);
     }
 
-    public void AddChild(TrackerGraphNode childGraphNode, PositionRotationTransform positionRotationTransform)
+    public void AddNeighbor(TrackerGraphNode childGraphNode, PositionRotationTransform positionRotationTransform)
     {
         nextGraphNodes[childGraphNode] = positionRotationTransform;
     }
 
-    public IEnumerable<PositionRotationTransform> EachAbsoluteTransformInGraph(PositionRotationTransform startingPositionRotation)
+    public IEnumerable<KeyValuePair<PositionRotationTransform, TrackerGraphNode>> EachAbsoluteTrackerNode(PositionRotationTransform startingPositionRotation)
     {
-        return EachAbsoluteTransformInGraphExcluding(startingPositionRotation, new List<TrackerGraphNode>());
+        return EachAbsoluteTrackerNodeExcluding(startingPositionRotation, new List<TrackerGraphNode>());
     }
 
-    public IEnumerable<PositionRotationTransform> EachAbsoluteTransformInGraphExcluding(PositionRotationTransform currentPositionRotation, IList<TrackerGraphNode> excludingNodes)
+    public IEnumerable<KeyValuePair<PositionRotationTransform, TrackerGraphNode>> EachAbsoluteTrackerNodeExcluding(PositionRotationTransform currentPositionRotation, IList<TrackerGraphNode> excludingNodes)
     {
         if (excludingNodes.Contains(this))
         {
@@ -29,15 +29,15 @@ class TrackerGraphNode
         }
 
         excludingNodes.Add(this);
-        yield return currentPositionRotation;
+        yield return new KeyValuePair<PositionRotationTransform, TrackerGraphNode>(currentPositionRotation, this);
 
         foreach (KeyValuePair<TrackerGraphNode, PositionRotationTransform> pair in nextGraphNodes)
         {
             PositionRotationTransform nextTransform = currentPositionRotation.AddTo(pair.Value);
 
-            foreach (PositionRotationTransform positionRotationTransform in pair.Key.EachAbsoluteTransformInGraphExcluding(nextTransform, excludingNodes))
+            foreach (KeyValuePair<PositionRotationTransform, TrackerGraphNode> remainingNodes in pair.Key.EachAbsoluteTrackerNodeExcluding(nextTransform, excludingNodes))
             {
-                yield return positionRotationTransform;
+                yield return new KeyValuePair<PositionRotationTransform, TrackerGraphNode>(remainingNodes.Key, remainingNodes.Value);
             }
         }
     }

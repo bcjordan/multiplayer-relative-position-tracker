@@ -17,6 +17,12 @@ public class PositionRotationTransform
         rotation = transform.rotation.eulerAngles;
     }
 
+    public PositionRotationTransform(Vector3 position, Vector3 rotation)
+    {
+        this.position = position;
+        this.rotation = rotation;
+    }
+
     public PositionRotationTransform AddTo(PositionRotationTransform transform)
     {
         PositionRotationTransform newTransform = new PositionRotationTransform();

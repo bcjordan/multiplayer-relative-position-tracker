@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Manager : MonoBehaviour
+public class Manager : uLink.MonoBehaviour
 {
     void Awake()
     {
