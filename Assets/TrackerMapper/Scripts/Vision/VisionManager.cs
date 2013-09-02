@@ -7,6 +7,11 @@ public class VisionManager : Manager
 
     public bool IsVisible(GameObject objectToCheck)
     {
+        if (cameraToUse == null)
+        {
+            return false;
+        }
+
         Camera camera = cameraToUse.GetComponent<Camera>();
         return !IsOccluded(objectToCheck.transform.position, camera.transform.position) &&
             IsWithinFrustrum(objectToCheck.renderer, camera);
