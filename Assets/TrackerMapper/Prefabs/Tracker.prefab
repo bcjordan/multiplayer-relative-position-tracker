@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 0, y: 0, z: 0}
+  placementPositionOffset: {x: 1, y: 0, z: 0}
   prefabToPlace: {fileID: 100000, guid: 250b056d550e84beb8e271105082f91a, type: 2}
 --- !u!1001 &100100000
 Prefab:

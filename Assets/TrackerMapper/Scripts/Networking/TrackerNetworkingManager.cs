@@ -10,6 +10,7 @@ public class TrackerNetworkingManager : Manager
             return;
         }
 
+        Debug.Log("Sending call");
         networkView.RPC("HelloRPC", uLink.RPCMode.Others, "Hello uLink. Timestamp = " + System.DateTime.Now.Ticks);
     }
 
