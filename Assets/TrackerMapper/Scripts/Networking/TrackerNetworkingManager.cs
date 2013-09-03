@@ -3,14 +3,6 @@ using System.Collections;
 
 public class TrackerNetworkingManager : Manager
 {
-    void Update()
-    {
-        if (uLink.Network.peerType == uLink.NetworkPeerType.Disconnected)
-        {
-            return;
-        }
-    }
-
     public void PlaceRelativeSpaceObject(string trackerID, PositionRotationTransform positionRotationTransform, int objectID)
     {
         if (uLink.Network.peerType == uLink.NetworkPeerType.Disconnected)

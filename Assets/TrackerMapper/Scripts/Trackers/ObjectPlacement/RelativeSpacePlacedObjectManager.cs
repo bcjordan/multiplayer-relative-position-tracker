@@ -6,7 +6,7 @@ public class RelativeSpacePlacedObjectManager : Manager
 {
     public List<GameObject> prefabsByIndex;
 
-    private IDictionary<string, IList<PlacedObject>> placedObjectsByNode = new Dictionary<string, IList<PlacedObject>>();
+    private IDictionary<string, IList<PlacedObject>> placedObjectsByTrackerID = new Dictionary<string, IList<PlacedObject>>();
 
     void Start()
     {
@@ -42,18 +42,18 @@ public class RelativeSpacePlacedObjectManager : Manager
 
     IList<PlacedObject> GetObjectsForGraphNode(string uniqueTrackerID)
     {
-        if (!placedObjectsByNode.ContainsKey(uniqueTrackerID))
+        if (!placedObjectsByTrackerID.ContainsKey(uniqueTrackerID))
         {
-            placedObjectsByNode[uniqueTrackerID] = new List<PlacedObject>();
+            placedObjectsByTrackerID[uniqueTrackerID] = new List<PlacedObject>();
         }
 
-        return placedObjectsByNode[uniqueTrackerID];
+        return placedObjectsByTrackerID[uniqueTrackerID];
     }
 
     void OnGUI()
     {
         int count = 0;
-        foreach(KeyValuePair<string, IList<PlacedObject>> pair in placedObjectsByNode)
+        foreach(KeyValuePair<string, IList<PlacedObject>> pair in placedObjectsByTrackerID)
         {
             count += pair.Value.Count;
         }

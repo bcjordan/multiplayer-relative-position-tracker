@@ -28,22 +28,20 @@ public class RelativeSpaceAvatarManager : Manager
 
     void Update()
     {
+        UpdateSharedRelativeTransform();
+    }
+
+    void UpdateSharedRelativeTransform()
+    {
         Tracker firstVisibleTracker = Managers.GetManager<VisibleTrackerManager>().TryGetFirstVisibleTracker();
         if (firstVisibleTracker == null)
         {
             return;
         }
 
-        PositionRotationTransform trackerToCamera = RelativePositionRotationTransform(firstVisibleTracker.gameObject, Managers.GetManager<VisionManager>().cameraToUse);
+        GameObject cameraObject = Managers.GetManager<VisionManager>().cameraToUse.gameObject;
+        PositionRotationTransform trackerToCamera = PositionRotationTransform.FromTo(firstVisibleTracker.gameObject, cameraObject);
         Managers.GetManager<TrackerNetworkingManager>().ShareAvatarPosition(firstVisibleTracker.uniqueID, trackerToCamera);
-    }
-
-    PositionRotationTransform RelativePositionRotationTransform(GameObject fromTracker, GameObject toAvatar)
-    {
-        PositionRotationTransform relativePositionRotationTransform = new PositionRotationTransform();
-        relativePositionRotationTransform.position = toAvatar.transform.position - fromTracker.transform.position;
-        relativePositionRotationTransform.rotation = toAvatar.transform.rotation.eulerAngles - fromTracker.transform.rotation.eulerAngles;
-        return relativePositionRotationTransform;
     }
 
     void OnTrackerPosition(string trackerID, PositionRotationTransform trackerAbsolutePositionRotation)

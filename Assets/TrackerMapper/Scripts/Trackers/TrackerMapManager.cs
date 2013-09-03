@@ -80,21 +80,13 @@ public class TrackerMapManager : Manager
 
         if (!trackerANode.ContainsNeighbor(trackerBNode))
         {
-            trackerANode.AddNeighbor(trackerBNode, RelativePositionRotationTransform(trackerA, trackerB));
+            trackerANode.AddNeighbor(trackerBNode, PositionRotationTransform.FromTo(trackerA.gameObject, trackerB.gameObject));
         }
 
         if (!trackerBNode.ContainsNeighbor(trackerANode))
         {
-            trackerBNode.AddNeighbor(trackerANode, RelativePositionRotationTransform(trackerB, trackerA));
+            trackerBNode.AddNeighbor(trackerANode, PositionRotationTransform.FromTo(trackerB.gameObject, trackerA.gameObject));
         }
-    }
-
-    PositionRotationTransform RelativePositionRotationTransform(Tracker fromTracker, Tracker toTracker)
-    {
-        PositionRotationTransform relativePositionRotationTransform = new PositionRotationTransform();
-        relativePositionRotationTransform.position = toTracker.transform.position - fromTracker.transform.position;
-        relativePositionRotationTransform.rotation = toTracker.transform.rotation.eulerAngles - fromTracker.transform.rotation.eulerAngles;
-        return relativePositionRotationTransform;
     }
 
     void StoreKnownTrackerNode(string trackerID)

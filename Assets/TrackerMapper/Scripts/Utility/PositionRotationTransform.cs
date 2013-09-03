@@ -10,6 +10,14 @@ public class PositionRotationTransform
     public PositionRotationTransform()
     {
     }
+    
+    public static PositionRotationTransform FromTo(GameObject fromObject, GameObject toObject)
+    {
+        PositionRotationTransform relativePositionRotationTransform = new PositionRotationTransform();
+        relativePositionRotationTransform.position = toObject.transform.position - fromObject.transform.position;
+        relativePositionRotationTransform.rotation = toObject.transform.rotation.eulerAngles - fromObject.transform.rotation.eulerAngles;
+        return relativePositionRotationTransform;
+    }
 
     public PositionRotationTransform(Transform transform)
     {
