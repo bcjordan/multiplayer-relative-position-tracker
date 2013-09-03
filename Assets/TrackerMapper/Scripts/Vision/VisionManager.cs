@@ -5,11 +5,16 @@ public class VisionManager : Manager
 {
     public GameObject cameraToUse;
 
+    void Start()
+    {
+        cameraToUse = Camera.main.gameObject;
+    }
+
     public bool IsVisible(GameObject objectToCheck)
     {
         if (cameraToUse == null)
         {
-            Debug.Log("Null camera");
+            Debug.Log("Null camera, re-start scene.");
             return false;
         }
 
