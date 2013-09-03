@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 1, y: 0, z: 0}
+  distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
 --- !u!1 &652455576
 GameObject:
@@ -731,7 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 1, y: 0, z: 0}
+  distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
 --- !u!1 &1214421795
 GameObject:
@@ -1238,7 +1238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 1, y: 0, z: 0}
+  distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
 --- !u!1 &1696122617
 GameObject:
@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 1, y: 0, z: 0}
+  distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
 --- !u!1 &1892661811
 GameObject:
@@ -1394,7 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6fc6d885d674890adca1df197aa8e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementPositionOffset: {x: 1, y: 0, z: 0}
+  distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
 --- !u!23 &1892661815
 Renderer:
@@ -1625,11 +1625,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1892661817}
   - {fileID: 1611245949}
-  - {fileID: 513769511}
   - {fileID: 1696122622}
+  - {fileID: 1892661817}
   - {fileID: 1179318690}
+  - {fileID: 513769511}
   m_Father: {fileID: 0}
 --- !u!1001 &2087403981
 Prefab:

@@ -3,15 +3,17 @@ using System.Collections;
 
 public class PlaceRelativeSpaceObjectOnClick : MonoBehaviour
 {
-    public Vector3 placementPositionOffset;
+    public float distanceToPlaceTowardsCamera;
 
     public int prefabIDToPlace;
 
     void OnMouseDown()
     {
-        TrackerGraphNode trackerGraphNode = Managers.GetManager<TrackerMapManager>().GetNodeForTracker(GetComponent<Tracker>());
+        Tracker tracker = GetComponent<Tracker>();
+        TrackerGraphNode trackerGraphNode = Managers.GetManager<TrackerMapManager>().GetNodeForID(tracker.uniqueID);
 
-        PositionRotationTransform newObjectTransform = new PositionRotationTransform(placementPositionOffset, Vector3.zero);
+        PositionRotationTransform newObjectTransform = PositionRotationTransform.FromTo(tracker.gameObject, Managers.GetManager<VisionManager>().cameraToUse.gameObject);
+        newObjectTransform.position = newObjectTransform.position.normalized * distanceToPlaceTowardsCamera;
 
         Managers.GetManager<TrackerNetworkingManager>().PlaceRelativeSpaceObject(trackerGraphNode.uniqueTrackerID, newObjectTransform, prefabIDToPlace);
     }
