@@ -55,7 +55,7 @@ public class TrackerMapManager : Manager
 
     void OnGUI()
     {
-        GUI.Label(new Rect(140, 0, 350, 40), trackerGraphNodesByID.Count.ToString() +
+        GUI.Label(new Rect(140, 120, 350, 40), trackerGraphNodesByID.Count.ToString() +
                   " mapped tracker" + (trackerGraphNodesByID.Count == 1 ? "" : "s"));
     }
 

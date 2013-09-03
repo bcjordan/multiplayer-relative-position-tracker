@@ -14,7 +14,7 @@ public class VisibleTrackerManager : Manager
 
     void OnGUI()
     {
-        GUI.Label(new Rect(140, 60, 350, 40), trackers.Count.ToString() +
+        GUI.Label(new Rect(140, 100, 350, 40), trackers.Count.ToString() +
                   " visible tracker" + (trackers.Count == 1 ? "" : "s"));
     }
     

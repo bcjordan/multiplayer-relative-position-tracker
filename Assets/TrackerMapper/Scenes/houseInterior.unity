@@ -636,6 +636,68 @@ Prefab:
   m_RootGameObject: {fileID: 1996504791}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &1173089715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1173089716}
+  - 108: {fileID: 1173089717}
+  m_Layer: 0
+  m_Name: House Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1173089716
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1173089715}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -.506466806, y: 3.48454595, z: .948946297}
+  m_LocalScale: {x: .211216956, y: .211216912, z: .211216912}
+  m_Children: []
+  m_Father: {fileID: 1214421797}
+--- !u!108 &1173089717
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1173089715}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: .867647052, g: 1, b: 1, a: 1}
+  m_Intensity: .280000001
+  m_Range: 20
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &1179318685
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +822,8 @@ Transform:
   m_LocalScale: {x: 4.73446846, y: 4.73446846, z: 4.73446846}
   m_Children:
   - {fileID: 1284619055}
+  - {fileID: 1863437189}
+  - {fileID: 1173089716}
   m_Father: {fileID: 652455577}
 --- !u!64 &1214421798
 MeshCollider:
@@ -1337,6 +1401,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceToPlaceTowardsCamera: 1
   prefabIDToPlace: 0
+--- !u!1 &1863437188
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1863437189}
+  - 108: {fileID: 1863437190}
+  m_Layer: 0
+  m_Name: House Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1863437189
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1863437188}
+  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalPosition: {x: -1.51129186, y: 1.75186133, z: .948945522}
+  m_LocalScale: {x: .211216956, y: .211216912, z: .211216912}
+  m_Children: []
+  m_Father: {fileID: 1214421797}
+--- !u!108 &1863437190
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1863437188}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 2
+  m_Color: {r: .867647052, g: 1, b: 1, a: 1}
+  m_Intensity: .400000006
+  m_Range: 100
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &1892661811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,11 +1751,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1611245949}
-  - {fileID: 1696122622}
   - {fileID: 1892661817}
-  - {fileID: 1179318690}
+  - {fileID: 1611245949}
   - {fileID: 513769511}
+  - {fileID: 1696122622}
+  - {fileID: 1179318690}
   m_Father: {fileID: 0}
 --- !u!1001 &2087403981
 Prefab:
