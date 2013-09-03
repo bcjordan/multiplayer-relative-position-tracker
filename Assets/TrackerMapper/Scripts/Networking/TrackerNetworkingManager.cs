@@ -9,13 +9,15 @@ public class TrackerNetworkingManager : Manager
         {
             return;
         }
-
-        Debug.Log("Sending call");
-        networkView.RPC("HelloRPC", uLink.RPCMode.Others, "Hello uLink. Timestamp = " + System.DateTime.Now.Ticks);
     }
 
     public void PlaceRelativeSpaceObject(string trackerID, PositionRotationTransform positionRotationTransform, int objectID)
     {
+        if (uLink.Network.peerType == uLink.NetworkPeerType.Disconnected)
+        {
+            return;
+        }
+
         networkView.RPC("AddRelativeSpaceObject", uLink.RPCMode.All, trackerID, positionRotationTransform, objectID);
     }
 
@@ -25,9 +27,19 @@ public class TrackerNetworkingManager : Manager
         Managers.GetManager<RelativeSpacePlacedObjectManager>().PlaceObjectAtGraphNode(trackerID, positionRotationTransform, objectID);
     }
 
-    [RPC]
-    void HelloRPC(string hello)
+    public void ShareAvatarPosition(string trackerID, PositionRotationTransform positionRotationTransform)
     {
-        Debug.Log(hello);
+        if (uLink.Network.peerType == uLink.NetworkPeerType.Disconnected)
+        {
+            return;
+        }
+
+        networkView.RPC("UpdateRelativeSpaceAvatar", uLink.RPCMode.Others, trackerID, positionRotationTransform);
+    }
+
+    [RPC]
+    void UpdateRelativeSpaceAvatar(string trackerID, PositionRotationTransform positionRotationTransform)
+    {
+        Managers.GetManager<RelativeSpaceAvatarManager>().UpdateAvatarPosition(trackerID, positionRotationTransform);
     }
 }

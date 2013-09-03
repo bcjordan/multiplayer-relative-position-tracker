@@ -52,7 +52,12 @@ public class RelativeSpacePlacedObjectManager : Manager
 
     void OnGUI()
     {
-        GUI.Label(new Rect(140, 80, 350, 40), placedObjectsByNode.Count.ToString() +
-                  " placed object" + (placedObjectsByNode.Count == 1 ? "" : "s"));
+        int count = 0;
+        foreach(KeyValuePair<string, IList<PlacedObject>> pair in placedObjectsByNode)
+        {
+            count += pair.Value.Count;
+        }
+
+        GUI.Label(new Rect(140, 80, 350, 40), count.ToString() + " placed object" + (count == 1 ? "" : "s"));
     }
 }
